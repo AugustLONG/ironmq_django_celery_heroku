@@ -26,7 +26,7 @@ def queue_task_creation(master_name, num_tasks):
 
 @task(queue=settings.QUEUES.MASTER)
 def handle_task_creation(master_name, num_tasks):
-    logger.error('Create tasks, Master:%s, Tasks:%s' % (master_name, num_tasks))
+    logger.info('Create tasks, Master:%s, Tasks:%s' % (master_name, num_tasks))
 
     with transaction.autocommit():
         for x in range(num_tasks):
