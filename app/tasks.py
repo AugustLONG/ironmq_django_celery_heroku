@@ -44,9 +44,9 @@ def queue_task(task):
 def handle_task(task_id):
     task = Task.objects.get(id=task_id)
 
-    if not task.completed:
+    if not task.complete:
         # Good
-        task.completed = True
+        task.complete = True
         task.save()
         return
 
