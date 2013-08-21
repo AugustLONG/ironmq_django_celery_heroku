@@ -3,6 +3,7 @@ import logging
 from celery import task
 
 from django.conf import settings
+from django.db import transaction
 
 from models import Task
 
@@ -25,15 +26,17 @@ def queue_task_creation(master_name, num_tasks):
 
 @task(queue=settings.QUEUES.MASTER)
 def handle_task_creation(master_name, num_tasks):
-    logger.error('Create tasks, Master:%s, Tasks:%s' % (m, tasks_per_master) )
-    for x in range(num_tasks):
-        # Create task
-        task_name = '%s-%s' % (master_name, x)
-        task = Task(name=task_name)
-        task.save()
+    logger.error('Create tasks, Master:%s, Tasks:%s' % (master_name, num_tasks))
 
-        # Queue it for "completion"
-        queue_task(task)
+    with transaction.autocommit():
+        for x in range(num_tasks):
+            # Create task
+            task_name = '%s-%s' % (master_name, x)
+            task = Task(name=task_name)
+            task.save()
+
+            # Queue it for "completion"
+            queue_task(task)
 
 
 # Task Worker
@@ -47,9 +50,10 @@ def handle_task(task_id):
 
     if not task.complete:
         # Good
-        task.complete = True
-        task.save()
-        return
+        with transaction.autocommit():
+            task.complete = True
+            task.save()
+            return
 
     # Bad
     logger.error('Duplicate Task: %s' % str(task))
