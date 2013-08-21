@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Thing(models.Model):
+class Task(models.Model):
     name = models.CharField(max_length=256)
     complete = models.BooleanField(default=False)
 
