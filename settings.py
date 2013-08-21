@@ -130,21 +130,21 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
     'formatters': {
-        'simple': {
-            'format': '%(levelname)s %(message)s'
+        'console': {
+            'format': 'CONSOLE %(levelname)s %(message)s'
         },
     },
     'filters': {
     },
     'handlers': {
         'console':{
-            'level': 'DEBUG',
+            'level': 'INFO',
             'class': 'logging.StreamHandler',
-            'formatter': 'simple'
+            'formatter': 'console'
         },
     },
     'loggers': {
-        'app': {
+        'app,tasks': {
             'handlers': ['console'],
             'level': 'INFO'
         }
