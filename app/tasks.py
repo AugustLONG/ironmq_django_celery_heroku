@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 # Test Runner
 
-def run_test(num_masters=4, num_tasks=100000):
+def run_test(num_masters=4, num_tasks=10000):
     tasks_per_master = num_tasks / num_masters
     for m in range(num_masters):
         queue_task_creation(str(m), tasks_per_master)
