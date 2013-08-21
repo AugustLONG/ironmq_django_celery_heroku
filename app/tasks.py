@@ -15,6 +15,7 @@ logger = logging.getLogger(__name__)
 def run_test(num_masters=4, num_tasks=100000):
     tasks_per_master = num_tasks / num_masters
     for m in range(num_masters):
+        logger.error('## RUN TEST, Master:%s, Tasks:%s ##' % (m, tasks_per_master) )
         queue_task_creation(str(m), tasks_per_master)
 
 
