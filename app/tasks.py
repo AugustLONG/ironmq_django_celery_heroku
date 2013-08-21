@@ -25,4 +25,4 @@ def handle_task(task_id):
         return
 
     # Bad
-    logger.error('REPEAT THING')
+    logger.error('DUPLICATE TASK: %s' % str(task))
