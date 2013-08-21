@@ -6,4 +6,4 @@ class Task(models.Model):
     complete = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return 'Task[id=%d, name=%s]' % (self.id, self.name)
+        return 'Task[id=%d, name=%s, complete=%s]' % (self.id, self.name, self.complete)
