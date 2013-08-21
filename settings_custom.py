@@ -39,7 +39,7 @@ DATABASES = {'default': dj_database_url.config()}
 
 
 # Celery (via IronMQ)
-if False:
+if True:
     BROKER_URL = get_env_variable('IRONMQ_URL')
     BROKER_POOL_LIMIT = 1
 
