@@ -15,7 +15,6 @@ logger = logging.getLogger(__name__)
 def run_test(num_masters=4, num_tasks=100000):
     tasks_per_master = num_tasks / num_masters
     for m in range(num_masters):
-        logger.error('## RUN TEST, Master:%s, Tasks:%s ##' % (m, tasks_per_master) )
         queue_task_creation(str(m), tasks_per_master)
 
 
@@ -26,6 +25,7 @@ def queue_task_creation(master_name, num_tasks):
 
 @task(queue=settings.QUEUES.MASTER)
 def handle_task_creation(master_name, num_tasks):
+    logger.error('Create tasks, Master:%s, Tasks:%s' % (m, tasks_per_master) )
     for x in range(num_tasks):
         # Create task
         task_name = '%s-%s' % (master_name, x)
@@ -52,4 +52,4 @@ def handle_task(task_id):
         return
 
     # Bad
-    logger.error('DUPLICATE TASK: %s' % str(task))
+    logger.error('Duplicate Task: %s' % str(task))

@@ -59,7 +59,7 @@ LOGGING = {
     'disable_existing_loggers': True,
     'formatters': {
         'console': {
-            'format': 'CONSOLE %(levelname)s %(message)s'
+            'format': 'CONSOLE %(levelname)s --> %(message)s'
         },
     },
     'filters': {
