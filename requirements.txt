@@ -12,6 +12,7 @@ iron-celery==0.4.0
 iron-core==1.1.1
 iron-mq==0.5
 kombu==2.5.13
+psycopg2==2.5.1
 python-dateutil==2.1
 pytz==2013b
 requests==1.2.3
