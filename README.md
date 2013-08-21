@@ -65,4 +65,7 @@ Aug 21 09:14:23 brads-testing app/celery_worker.2:  CONSOLE INFO --> Handle task
 Aug 21 09:14:23 brads-testing app/celery_worker.2:  CONSOLE ERROR --> Duplicate Task: Task[id=77734, name=2.999, complete=True]
 ```
 
-Note Task[id=77734] is queued once, but run twice. This doesn't happen when using CloudAMQP (see settings_custom.py)
+Task[id=77734] is queued once, but run twice. 
+In a test using 4 producers, 4 workers, running 4000 tasks, there will be ~100 of these occurences.
+
+Note: This doesn't happen when using CloudAMQP (see settings_custom.py)
