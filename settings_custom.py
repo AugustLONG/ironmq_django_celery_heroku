@@ -50,5 +50,6 @@ djcelery.setup_loader()
 
 INSTALLED_APPS = (
     'djcelery',
+    'gunicorn',
     'app'
 )
