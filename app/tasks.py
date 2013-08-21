@@ -21,7 +21,7 @@ def run_test(num_masters=4, num_tasks=100000):
 # Master Task Queue-er
 
 def queue_task_creation(master_name, num_tasks):
-    handle_task_creation(master_name, num_tasks)
+    handle_task_creation.delay(master_name, num_tasks)
 
 @task(queue=settings.QUEUES.MASTER)
 def handle_task_creation(master_name, num_tasks):
