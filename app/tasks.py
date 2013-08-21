@@ -38,6 +38,8 @@ def handle_task_creation(master_name, num_tasks):
             # Queue it for "completion"
             queue_task(task)
 
+    logger.info('Create tasks complete, Master:%s' % (master_name))
+
 
 # Task Worker
 
