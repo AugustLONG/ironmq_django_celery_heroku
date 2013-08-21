@@ -48,6 +48,8 @@ def handle_task_creation(master_name, num_tasks):
 # Task Worker
 
 def queue_task(task):
+    logger.info('Queue task: %s' % str(task))
+
     #handle_task.delay(task.id)
     handle_task.apply_async(args=[task.name], iron_mq_timeout=90)
 
