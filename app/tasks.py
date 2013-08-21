@@ -15,7 +15,8 @@ logger = logging.getLogger(__name__)
 
 def run_test(num_masters=4, num_tasks=10000):
     # Start by deleting all Task objects
-    Task.objects.all().delete()
+    with transaction.commit_on_success():
+        Task.objects.all().delete()
 
     tasks_per_master = num_tasks / num_masters
     for m in range(num_masters):
@@ -31,15 +32,15 @@ def queue_task_creation(master_name, num_tasks):
 def handle_task_creation(master_name, num_tasks):
     logger.info('Create tasks, Master:%s, Tasks:%s' % (master_name, num_tasks))
 
-    with transaction.autocommit():
-        for x in range(num_tasks):
-            # Create task
+    for x in range(num_tasks):
+        # Create task
+        with transaction.commit_on_success():
             task_name = '%s.%s' % (master_name, x)
             task = Task(name=task_name)
             task.save()
 
-            # Queue it for "completion"
-            queue_task(task)
+        # Queue it for "completion"
+        queue_task(task)
 
     logger.info('Create tasks complete, Master:%s' % (master_name))
 
@@ -61,6 +62,6 @@ def handle_task(task_id):
         logger.error('Duplicate Task: %s' % str(task))
 
     # Good
-    with transaction.autocommit():
+    with transaction.commit_on_success():
         task.complete = True
         task.save()
