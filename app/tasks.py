@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 # Test Runner
 
-def run_test(num_masters=4, num_tasks=10000):
+def run_test(num_masters=4, num_tasks=4000):
     # Start by deleting all Task objects
     with transaction.commit_on_success():
         Task.objects.all().delete()
@@ -49,11 +49,11 @@ def handle_task_creation(master_name, num_tasks):
 
 def queue_task(task):
     #handle_task.delay(task.id)
-    handle_task.apply_async(args=[task.id], iron_mq_timeout=90)
+    handle_task.apply_async(args=[task.name], iron_mq_timeout=90)
 
 @task(queue=settings.QUEUES.WORKER)
-def handle_task(task_id):
-    task = Task.objects.get(id=task_id)
+def handle_task(task_name):
+    task = Task.objects.get(name=task_name)
 
     logger.info('Handle task: %s' % str(task))
 
