@@ -39,13 +39,21 @@ DATABASES = {'default': dj_database_url.config()}
 
 
 # Celery (via IronMQ)
-BROKER_URL = get_env_variable('IRONMQ_URL')
-BROKER_POOL_LIMIT = 1
+if False:
+    BROKER_URL = get_env_variable('IRONMQ_URL')
+    BROKER_POOL_LIMIT = 1
 
-import djcelery
-import iron_celery
+    import djcelery
+    import iron_celery
 
-djcelery.setup_loader()
+    djcelery.setup_loader()
+
+else:
+    BROKER_URL = get_env_variable('CLOUDAMQP_URL')
+    BROKER_POOL_LIMIT = 1
+
+    import djcelery
+    djcelery.setup_loader()
 
 
 INSTALLED_APPS = (
