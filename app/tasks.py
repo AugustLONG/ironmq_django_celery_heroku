@@ -31,7 +31,7 @@ def handle_task_creation(master_name, num_tasks):
     with transaction.autocommit():
         for x in range(num_tasks):
             # Create task
-            task_name = '%s-%s' % (master_name, x)
+            task_name = '%s.%s' % (master_name, x)
             task = Task(name=task_name)
             task.save()
 
@@ -50,12 +50,13 @@ def queue_task(task):
 def handle_task(task_id):
     task = Task.objects.get(id=task_id)
 
-    if not task.complete:
-        # Good
-        with transaction.autocommit():
-            task.complete = True
-            task.save()
-            return
+    logger.info('Handle task: %s' % str(task))
 
-    # Bad
-    logger.error('Duplicate Task: %s' % str(task))
+    if task.complete:
+        # Bad
+        logger.error('Duplicate Task: %s' % str(task))
+
+    # Good
+    with transaction.autocommit():
+        task.complete = True
+        task.save()
